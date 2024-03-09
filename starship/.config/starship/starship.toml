@@ -1,0 +1,14 @@
+[character]
+success_symbol = '[➜](bold green)'
+error_symbol  = '[➜](bold red)'
+
+[python]
+python_binary = ["./venv/bin/python", "python3", "python", "python2"]
+
+[hostname]
+disabled = false
+ssh_only = true
+format = "[@$hostname](green) "
+
+[directory]
+truncate_to_repo = true

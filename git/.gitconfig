@@ -1,0 +1,26 @@
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[user]
+    name = lcian
+    email = cian.lorenzo@gmail.com
+
+[diff]
+    tool = difftastic
+[difftool]
+    prompt = false
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
+[pager]
+    difftool = true
+
+[merge]
+    tool = nvimdiff
+    conflictstyle = diff3
+[mergetool "vimdiff"]
+    layout = LOCAL,MERGED,REMOTE
+[init]
+	defaultBranch = master

@@ -1,0 +1,4 @@
+configuration {
+    modi: "window,drun,ssh,combi,windowcd,run,keys";
+    combi-modi: "window,drun,ssh";
+}
