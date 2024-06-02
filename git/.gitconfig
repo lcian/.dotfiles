@@ -24,3 +24,5 @@
     layout = LOCAL,MERGED,REMOTE
 [init]
 	defaultBranch = master
+[rerere]
+	enabled = true

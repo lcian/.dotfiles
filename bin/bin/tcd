@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    selected=$($find | $fzf)
+    selected=$(find ~/projects ~/  -mindepth 1 -maxdepth 2 -type d | fzf --preview 'logo-ls -X {}')
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+tmux new-window -c "$selected"

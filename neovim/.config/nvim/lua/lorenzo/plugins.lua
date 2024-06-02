@@ -9,12 +9,12 @@ return require('packer').startup(function(use)
     require('lualine').setup {
         options = {
             theme = 'sonokai',
-            icons_enabled = true
+            icons_enabled = true,
         },
         extensions = { 'fzf', 'fugitive' },
         sections = {
             lualine_c = { 'filename', "aerial" }
-        }
+        },
         --        sections = {
         --            lualine_x = { "aerial" },
         --        }
@@ -106,17 +106,17 @@ return require('packer').startup(function(use)
     local trouble = require("trouble.providers.telescope")
 
     local telescope = require("telescope")
-    telescope.setup {
-        defaults = {
-            mappings = {
-                i = { ["<c-t>"] = trouble.open_with_trouble },
-                n = { ["<c-t>"] = trouble.open_with_trouble },
-            },
-        },
-    }
-    use "tpope/vim-fugitive"
+    -- telescope.setup {
+    --     defaults = {
+    --         mappings = {
+    --             i = { ["<c-t>"] = trouble.open_with_trouble },
+    --             n = { ["<c-t>"] = trouble.open_with_trouble },
+    --         },
+    --     },
+    -- }
+    -- use "tpope/vim-fugitive"
 
-    use "github/copilot.vim"
+    -- use "github/copilot.vim"
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
@@ -198,4 +198,17 @@ return require('packer').startup(function(use)
         branch = "harpoon2",
         requires = { {"nvim-lua/plenary.nvim"} }
     }
+
+    use({
+        "jose-elias-alvarez/null-ls.nvim",
+        config = function()
+            require("null-ls").setup()
+        end,
+        requires = { "nvim-lua/plenary.nvim" },
+    })
+
+    -- use {
+    --     "m4xshen/hardtime.nvim",
+    --     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    -- }
 end)

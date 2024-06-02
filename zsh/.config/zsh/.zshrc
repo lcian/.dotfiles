@@ -24,6 +24,7 @@ bindkey 'θ' backward-word                         # ctrl + shift + h (Alacritty
 bindkey '^[[Z' reverse-menu-complete              # shift + tab previous autocomplete choice
 bindkey '^K' up-line-or-history
 bindkey '^J' down-line-or-history
+bindkey -r '^O'
 
 # enable completion features
 autoload -Uz compinit
@@ -150,9 +151,9 @@ ZSH_HIGHLIGHT_STYLES[bracket-level-5]=fg=cyan,bold
 ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
 
 # command not found
-if [ -f /etc/zsh_command_not_found ]; then
-    . /etc/zsh_command_not_found
-fi
+# if [ -f /etc/zsh_command_not_found ]; then
+#     . /etc/zsh_command_not_found
+# fi
 
 # some environment vars
 export TERM="xterm-256color" # for vim and Alacritty correct colors
@@ -187,5 +188,16 @@ export PATH="$PATH:$NPM_PACKAGES/bin"
 export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
 
 export PYTHONSTARTUP=$HOME/.pythonrc.py
+
+# disable Ctrl+S
+if [[ -t 0 && $- = *i* ]]
+then
+    stty -ixon
+fi
+
+export GOPATH="/home/lorenzo/lib/go"
+export PATH="$PATH:$GOPATH/bin"
+
+export JAVA_HOME="/usr/lib64/jvm/java-22-openjdk-22"
 
 clear

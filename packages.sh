@@ -31,6 +31,7 @@ commands=(
     "htop"
     "tree"
     "neofetch"
+    "jq"
 
     # Development
     "gcc"

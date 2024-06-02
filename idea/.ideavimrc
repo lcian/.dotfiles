@@ -1,0 +1,45 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+set nocompatible
+set encoding=utf-8
+
+set backspace=indent,eol,start
+
+set autoindent
+set expandtab
+set tabstop=4
+set shiftwidth=4
+
+set number
+set ruler
+set scrolloff=9
+set laststatus=2
+set splitbelow
+set splitright
+set showmode
+set showcmd
+
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set showmatch
+set wildmenu
+set wildmode=full
+
+set undodir=~/.vim/undo//
+set noswapfile
+set nomodeline
+
+let mapleader=" "
+
+map <leader>gf <Action>(ReformatCode)
+map <leader>gh <Action>(ShowHoverInfo)
+map <leader>gA <Action>(Show)
+map <leader>gR <Action>(RenameElement)
+map <C-x> <Action>(NextInlineCompletionSuggestionAction)
+map <C-p> <Action>(PrevInlineCompletionSuggestionAction)
+map <C-y> <Action>(InsertInlineCompletionAction)

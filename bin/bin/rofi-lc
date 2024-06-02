@@ -1,0 +1,8 @@
+#!/bin/bash
+
+ROFI_ARGS="-theme ~/.config/rofi/rounded-gray-dark.rasi"
+LC_DIR="/home/lorenzo/projects/lc/snippets"
+
+files=$(ls $LC_DIR)
+selected=$(echo "$files" | rofi -dmenu -i -p "Select snippet" $ROFI_ARGS)
+xclip -selection clipboard -i $LC_DIR/$selected

@@ -5,7 +5,7 @@ import click
 import subprocess
 import select
 
-GHIDRA_PATH = os.path.expanduser('~/lib/ghidra_10.3_PUBLIC/')
+GHIDRA_PATH = os.path.expanduser('~/lib/ghidra_11.0.3_PUBLIC/')
 
 def shouldRun():
     click.secho('will run analysis in 3 seconds, press any key to cancel', fg='yellow')
@@ -45,6 +45,12 @@ if __name__ == '__main__':
     cwd = argv[1]
     PROJECT_DIRECTORY = os.path.join(cwd, '/.ghidra')
     file_names = os.listdir(argv[1])
+    if "ghidra" in file_names:
+        subfiles = os.listdir(os.path.join(cwd, 'ghidra'))
+        for subfile in subfiles:
+            if subfile.endswith(".gpr"):
+                run(os.path.join(cwd, 'ghidra', subfile))
+                exit(0)
     for file_name in file_names:
         if file_name.endswith("_patched"):
             run(os.path.join(cwd, file_name))

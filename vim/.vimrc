@@ -29,3 +29,4 @@ set wildmode=full
 
 set undodir=~/.vim/undo//
 set noswapfile
+set nomodeline
