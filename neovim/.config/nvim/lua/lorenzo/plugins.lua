@@ -3,8 +3,11 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
     use "wbthomason/packer.nvim"
 
+    -- interface
     use "sainnhe/sonokai"
     use "nvim-tree/nvim-web-devicons"
+    use 'echasnovski/mini.icons'
+    require('mini.icons').setup()
     use "nvim-lualine/lualine.nvim"
     require('lualine').setup {
         options = {
@@ -15,24 +18,21 @@ return require('packer').startup(function(use)
         sections = {
             lualine_c = { 'filename', "aerial" }
         },
-        --        sections = {
-        --            lualine_x = { "aerial" },
-        --        }
+        -- sections = {
+        --     lualine_x = { "aerial" },
+        -- }
     }
-
     use {
         "romgrk/barbar.nvim",
         requires = "nvim-web-devicons"
     }
-    require'barbar'.setup({
+    require 'barbar'.setup({
         icons = {
             buffer_index = true
         }
     })
 
-    -- use "ggandor/leap.nvim"
-    -- require('leap').add_default_mappings()
-
+    -- movement
     use({
         "folke/flash.nvim",
         config = function()
@@ -40,33 +40,34 @@ return require('packer').startup(function(use)
         end
     })
 
-    -- use({
-    --     "folke/noice.nvim",
-    --     config = function()
-    --         require("noice").setup({
-    --             lsp = {
-    --                 -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-    --                 override = {
-    --                     ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-    --                     ["vim.lsp.util.stylize_markdown"] = true,
-    --                     ["cmp.entry.get_documentation"] = true,
-    --                 },
-    --             },
-    --             -- you can enable a preset for easier configuration
-    --             presets = {
-    --                 bottom_search = true,         -- use a classic bottom cmdline for search
-    --                 command_palette = true,       -- position the cmdline and popupmenu together
-    --                 long_message_to_split = true, -- long messages will be sent to a split
-    --                 inc_rename = false,           -- enables an input dialog for inc-rename.nvim
-    --                 lsp_doc_border = false,       -- add a border to hover docs and signature help
-    --             },
-    --         })
-    --     end,
-    --     requires = {
-    --         "MunifTanjim/nui.nvim",
-    --         "rcarriga/nvim-notify",
-    --     }
-    -- })
+    use({
+        "folke/noice.nvim",
+        config = function()
+            require("noice").setup({
+                lsp = {
+                    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                    override = {
+                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                        ["vim.lsp.util.stylize_markdown"] = true,
+                        ["cmp.entry.get_documentation"] = true,
+                    },
+                },
+                -- you can enable a preset for easier configuration
+                presets = {
+                    bottom_search = true,         -- use a classic bottom cmdline for search
+                    command_palette = true,       -- position the cmdline and popupmenu together
+                    long_message_to_split = true, -- long messages will be sent to a split
+                    inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+                    lsp_doc_border = false,       -- add a border to hover docs and signature help
+                },
+            })
+        end,
+        requires = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+        }
+    })
+
     use { "folke/trouble.nvim",
         lsp_trouble = false,
         requires = "nvim-tree/nvim-web-devicons",
@@ -88,6 +89,7 @@ return require('packer').startup(function(use)
         run = ":TSUpdate"
     }
     use "nvim-treesitter/nvim-treesitter-context"
+    use 'nvim-treesitter/playground'
     require 'nvim-treesitter.configs'.setup {
         ensure_installed = { "c", "lua", "vimdoc", "python", "javascript", "gitcommit", "gitignore", "dockerfile",
             "json", "yaml", "toml", "sql", "typescript", "rust" },
@@ -116,7 +118,6 @@ return require('packer').startup(function(use)
     -- }
     -- use "tpope/vim-fugitive"
 
-    -- use "github/copilot.vim"
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
@@ -136,10 +137,12 @@ return require('packer').startup(function(use)
             { 'L3MON4D3/LuaSnip' },                  -- Required
         }
     }
+
     local lsp = require('lsp-zero').preset('recommended')
     lsp.on_attach(function(client, bufnr)
         lsp.default_keymaps({ buffer = bufnr })
     end)
+
     require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
     lsp.preset("recommended")
     local cmp = require('cmp')
@@ -155,36 +158,19 @@ return require('packer').startup(function(use)
     lsp.setup_nvim_cmp({
         mapping = cmp_mappings
     })
-    -- lsp.on_attach(function(client, bufnr)
-    -- local opts = {buffer = bufnr, remap = false}
-    --   vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-    --   vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-    --   vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-    --   vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-    --   vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-    --   vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
-    --   vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
-    --   vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-    --   vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
-    --   vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-    -- end)
 
     lsp.setup()
 
     use 'ethanholz/nvim-lastplace'
     require 'nvim-lastplace'.setup {}
 
-    use("mbbill/undotree")
+    use "mbbill/undotree"
 
-    -- use 'ThePrimeagen/harpoon'
-    -- local mark = require("harpoon.mark")
-    -- local ui = require("harpoon.ui")
-
-    -- vim.keymap.set("n", "<leader>a", mark.add_file)
-    -- vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
-
-    -- experimental
     use 'christoomey/vim-tmux-navigator'
+
+    use "github/copilot.vim"
+
+    -- could actually remove this
     use 'nvim-tree/nvim-tree.lua'
     require("nvim-tree").setup()
     use {
@@ -192,12 +178,6 @@ return require('packer').startup(function(use)
         config = function() require('aerial').setup() end
     }
     require('aerial').setup()
-
-    use {
-        "ThePrimeagen/harpoon",
-        branch = "harpoon2",
-        requires = { {"nvim-lua/plenary.nvim"} }
-    }
 
     use({
         "jose-elias-alvarez/null-ls.nvim",
@@ -207,8 +187,17 @@ return require('packer').startup(function(use)
         requires = { "nvim-lua/plenary.nvim" },
     })
 
-    -- use {
-    --     "m4xshen/hardtime.nvim",
-    --     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    -- }
+    -- use 'rkaminsk/vim-syntax-clingo'
+
+    use 'tris203/precognition.nvim'
+
+    use {
+        "AckslD/nvim-neoclip.lua",
+        requires = {
+            { 'nvim-telescope/telescope.nvim' },
+        },
+        config = function()
+            require('neoclip').setup()
+        end,
+    }
 end)

@@ -111,3 +111,9 @@ map_symbol = true
 
 [aws]
 disabled = true
+
+[direnv]
+disabled = true
+
+[nix_shell]
+symbol = "❄️"

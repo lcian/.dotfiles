@@ -63,3 +63,5 @@ icons:
   gdb: ""
   sudo: "󰆥"
   bat: "󰭟"
+  nix: "󱄅"
+  nix-build: "󱄅"

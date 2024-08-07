@@ -3,42 +3,47 @@ vim.g.mapleader = " "
 local wk = require("which-key")
 
 wk.register({
-    f = {
-        name = "Telescope",
-        f = { "<cmd>Telescope find_files<CR>", "Find File" },
-        g = { "<cmd>Telescope git_files<CR>", "Git files" },
-        r = { "<cmd>Telescope live_grep<CR>", "Live grep" },
-        h = { "<cmd>Telescope help_tags<CR>", "Help" },
-        m = { "<cmd>Telescope marks initial_mode=normal<CR>", "Marks" }
-    },
+	f = {
+		name = "Telescope",
+		f = { "<cmd>Telescope find_files<CR>", "Find File" },
+		g = { "<cmd>Telescope git_files<CR>", "Git files" },
+		l = { "<cmd>Telescope live_grep<CR>", "Live grep" },
+		h = { "<cmd>Telescope help_tags<CR>", "Help" },
+		m = { "<cmd>Telescope marks initial_mode=normal<CR>", "Marks" },
+		r = { "<cmd>Telescope lsp_references<CR>", "References" },
+		c = { "<cmd>Telescope lsp_references<CR>", "References" },
+	},
 }, { prefix = "<leader>" })
 
 wk.register({
-    b = { "<cmd>Telescope buffers initial_mode=normal<CR>", "Buffers" }
+	b = { "<cmd>Telescope buffers initial_mode=normal<CR>", "Buffers" },
 }, { prefix = "<leader>" })
 
 wk.register({
-    g = {
-        name = "LSP",
-        d = { ":lua vim.lsp.buf.definition()<CR>", "Definition" },
-        f = { ":lua vim.lsp.buf.format()<CR>", "Format" },
-        u = { ":lua vim.lsp.buf.references()<cr>", "Usage" },
-        R = { ":lua vim.lsp.buf.rename()<cr>", "Rename" },
-        h = { ":lua vim.lsp.buf.hover()<CR>", "Hover" },
-        A = { ":lua vim.lsp.buf.code_action()<CR>", "Code action" },
-        t = { ":Trouble<CR>", "Trouble" },
-        c = {
-            name = "Copilot",
-            e = { ":Copilot enable<CR>:Copilot status<CR>", "Enable" },
-            d = { ":Copilot disable<CR>:Copilot status<CR>", "Disable" },
-            s = { ":Copilot panel<CR>", "Status" }
-        }
-    }
+	g = {
+		name = "LSP",
+		A = { ":lua vim.lsp.buf.code_action()<CR>", "Code Action" },
+		d = { ":lua vim.lsp.buf.definition()<CR>", "Definition" },
+		f = { ":lua vim.lsp.buf.format()<CR>", "Format" },
+		u = { ":lua vim.lsp.buf.references()<cr>", "Usage" },
+		R = { ":lua vim.lsp.buf.rename()<cr>", "Rename" },
+		h = { ":lua vim.lsp.buf.hover()<CR>", "Hover" },
+		t = { ":Trouble diagnostics<CR>", "Trouble" },
+		c = {
+			name = "Copilot",
+			e = { ":Copilot enable<CR>:Copilot status<CR>", "Enable" },
+			d = { ":Copilot disable<CR>:Copilot status<CR>", "Disable" },
+			s = { ":Copilot panel<CR>", "Status" },
+		},
+	},
 }, { prefix = "<leader>" })
 
+wk.register({
+	["<C-S>"] = { ":lua vim.lsp.buf.code_action()<CR>", "Code Action" },
+})
 
 wk.register({
-    u = { ":UndotreeToggle<CR>", "UndoTree" },
+	u = { ":UndotreeToggle<CR>", "UndoTree" },
 }, { prefix = "<leader>" })
 
 -- wk.register({
@@ -46,26 +51,26 @@ wk.register({
 -- }, { prefix = "<leader>" })
 
 wk.register({
-    ["<leader>,"]  = { ":AerialToggle!<CR>", "Aerial" }
+	["<leader>,"] = { ":AerialToggle!<CR>", "Aerial" },
 })
 
 wk.register({
-    ["p"] = { ":BufferPrevious<CR>", "Previous buffer" },
-    ["n"] = { ":BufferNext<CR>", "Next buffer"         },
-    ["q"] = { ":BufferClose<CR>", "which_key_ignore"    },
-    ["1"] = { ":BufferGoto 1<CR>", "which_key_ignore"   },
-    ["2"] = { ":BufferGoto 2<CR>", "which_key_ignore"   },
-    ["3"] = { ":BufferGoto 3<CR>", "which_key_ignore"   },
-    ["4"] = { ":BufferGoto 4<CR>", "which_key_ignore"   },
-    ["5"] = { ":BufferGoto 5<CR>", "which_key_ignore"   },
-    ["6"] = { ":BufferGoto 6<CR>", "which_key_ignore"   },
-    ["7"] = { ":BufferGoto 7<CR>", "which_key_ignore"   },
-    ["8"] = { ":BufferGoto 8<CR>", "which_key_ignore"   },
-    ["9"] = { ":BufferGoto 9<CR>", "which_key_ignore"   },
+	["p"] = { ":BufferPrevious<CR>", "Previous buffer" },
+	["n"] = { ":BufferNext<CR>", "Next buffer" },
+	["q"] = { ":BufferClose<CR>", "which_key_ignore" },
+	["1"] = { ":BufferGoto 1<CR>", "which_key_ignore" },
+	["2"] = { ":BufferGoto 2<CR>", "which_key_ignore" },
+	["3"] = { ":BufferGoto 3<CR>", "which_key_ignore" },
+	["4"] = { ":BufferGoto 4<CR>", "which_key_ignore" },
+	["5"] = { ":BufferGoto 5<CR>", "which_key_ignore" },
+	["6"] = { ":BufferGoto 6<CR>", "which_key_ignore" },
+	["7"] = { ":BufferGoto 7<CR>", "which_key_ignore" },
+	["8"] = { ":BufferGoto 8<CR>", "which_key_ignore" },
+	["9"] = { ":BufferGoto 9<CR>", "which_key_ignore" },
 }, { prefix = "<leader>" })
 
 wk.register({
-    Q = "which_key_ignore"
+	Q = "which_key_ignore",
 })
 
 -- telescope
@@ -108,11 +113,11 @@ vim.keymap.set("n", "Q", "<nop>")
 -- vim.keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
 
 -- vim-tmux-navigator
-vim.cmd [[ let g:tmux_navigator_no_mappings = 1 ]]
-vim.cmd [[ noremap <silent> <M-h> :<C-U>TmuxNavigateLeft<cr> ]]
-vim.cmd [[ noremap <silent> <M-j> :<C-U>TmuxNavigateDown<cr> ]]
-vim.cmd [[ noremap <silent> <M-k> :<C-U>TmuxNavigateUp<cr> ]]
-vim.cmd [[ noremap <silent> <M-l> :<C-U>TmuxNavigateRight<cr> ]]
+vim.cmd([[ let g:tmux_navigator_no_mappings = 1 ]])
+vim.cmd([[ noremap <silent> <M-h> :<C-U>TmuxNavigateLeft<cr> ]])
+vim.cmd([[ noremap <silent> <M-j> :<C-U>TmuxNavigateDown<cr> ]])
+vim.cmd([[ noremap <silent> <M-k> :<C-U>TmuxNavigateUp<cr> ]])
+vim.cmd([[ noremap <silent> <M-l> :<C-U>TmuxNavigateRight<cr> ]])
 
 -- nvim-tree
 -- vim.keymap.set("n", "<leader>m", ":NvimTreeFindFileToggle<CR>")
@@ -134,40 +139,60 @@ vim.keymap.set("n", "<leader>7", ":BufferGoto 7<CR>")
 vim.keymap.set("n", "<leader>8", ":BufferGoto 8<CR>")
 vim.keymap.set("n", "<leader>9", ":BufferGoto 9<CR>")
 
-
 -- toggler
 -- vim.keymap.set({'n', 'v'  }, '<leader>i', ":lua require('nvim-toggler').toggle()")
 
 -- flash
-vim.keymap.set({"n", 'v'}, 's', function() require("flash").jump() end)
+vim.keymap.set({ "n", "v" }, "s", function()
+	require("flash").jump()
+end)
 
 -- harpoon
-local harpoon = require("harpoon")
-harpoon:setup()
+-- local harpoon = require("harpoon")
+-- harpoon:setup()
+--
+-- vim.keymap.set("n", "<leader>a",
+--     function()
+--         harpoon:list():append()
+--         print("Added current file to Harpoon list")
+--     end
+-- )
+-- vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
-vim.keymap.set("n", "<leader>a",
-    function()
-        harpoon:list():append()
-        print("Added current file to Harpoon list")
-    end
-)
-vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+vim.keymap.set("n", "<leader>1", function()
+	harpoon:list():select(1)
+end)
+vim.keymap.set("n", "<leader>2", function()
+	harpoon:list():select(2)
+end)
+vim.keymap.set("n", "<leader>3", function()
+	harpoon:list():select(3)
+end)
+vim.keymap.set("n", "<leader>4", function()
+	harpoon:list():select(4)
+end)
 
-vim.keymap.set("n", "<leader>1", function() harpoon:list():select(1) end)
-vim.keymap.set("n", "<leader>2", function() harpoon:list():select(2) end)
-vim.keymap.set("n", "<leader>3", function() harpoon:list():select(3) end)
-vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end)
-
-vim.keymap.set("n", "<C-P>", function() harpoon:list():prev() end)
-vim.keymap.set("n", "<C-N>", function() harpoon:list():next() end)
+vim.keymap.set("n", "<C-P>", function()
+	harpoon:list():prev()
+end)
+vim.keymap.set("n", "<C-N>", function()
+	harpoon:list():next()
+end)
 
 vim.keymap.set("n", "<leader>h", ":Hardtime disable<CR>")
 vim.keymap.set("n", "<leader>H", ":Hardtime enable<CR>")
 
 local function toggle_cursor_highlight()
-  local cursorline = vim.wo.cursorline
-  local cursorcolumn = vim.wo.cursorcolumn
-  vim.wo.cursorline = not cursorline
-  vim.wo.cursorcolumn = not cursorcolumn
+	local cursorline = vim.wo.cursorline
+	local cursorcolumn = vim.wo.cursorcolumn
+	vim.wo.cursorline = not cursorline
+	vim.wo.cursorcolumn = not cursorcolumn
 end
 vim.keymap.set("n", "<leader>th", toggle_cursor_highlight)
+
+vim.keymap.set("n", "<leader>lt", ":InspectTree<CR>")
+vim.keymap.set("n", "<leader>lq", ":EditQuery<CR>")
+
+vim.keymap.set("n", "<leader>tp", require("precognition").toggle)
+
+vim.keymap.set("n", "<leader>ps", ":PackerSync<CR>")

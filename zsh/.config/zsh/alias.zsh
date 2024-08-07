@@ -17,7 +17,7 @@ alias aliasc="$EDITOR $ZDOTDIR/alias.zsh"
 alias zrc="$EDITOR $ZDOTDIR/.zshrc"
 alias nvrc="$EDITOR ~/.config/nvim/lua/lorenzo/settings.lua"
 alias nvp="$EDITOR ~/.config/nvim/lua/lorenzo/plugins.lua"
-alias nvm="$EDITOR ~/.config/nvim/lua/lorenzo/maps.lua"
+alias nvvm="$EDITOR ~/.config/nvim/lua/lorenzo/maps.lua"
 alias alac="$EDITOR ~/.config/alacritty/alacritty.toml"
 alias trc="$EDITOR ~/.config/tmux/tmux.conf"
 alias src="$EDITOR ~/.config/starship/starship.toml"
@@ -59,5 +59,9 @@ copr() { git fetch origin "refs/pull/$1/head:pr/$1" && git checkout "pr/$1"; }
 
 alias idea="/home/lorenzo/lib/intellij/idea-IU-241.15989.150/bin/./idea.sh >/dev/null 2>&1 & disown"
 alias goland="/home/lorenzo/lib/goland/GoLand-2024.1.1/bin/./goland.sh >/dev/null 2>&1 & disown"
+alias rover="/home/lorenzo/lib/rust-rover/RustRover-2024.1.2/bin/rustrover.sh >/dev/null 2>&1 & disown"
+alias postman="/home/lorenzo/lib/postman/./Postman >/dev/null 2>&1 & disown"
 
 alias jgit='java -jar /home/lorenzo/projects/jgit/target/jgit.jar "$@"'
+
+alias obsidian="/home/lorenzo/lib/Obsidian-1.6.5.AppImage >/dev/null 2>&1 & disown"
