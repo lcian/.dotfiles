@@ -6,6 +6,7 @@ setopt nonomatch           # hide error message if there is no match for the pat
 setopt notify              # report the status of background jobs immediately
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
+setopt noclobber
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 
@@ -25,6 +26,8 @@ bindkey '^[[Z' reverse-menu-complete              # shift + tab previous autocom
 bindkey '^K' up-line-or-history
 bindkey '^J' down-line-or-history
 bindkey -r '^O'
+autoload -U edit-command-line
+bindkey '^Xe' edit-command-line
 
 # enable completion features
 autoload -Uz compinit
@@ -156,6 +159,7 @@ ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
 # fi
 
 # some environment vars
+export BROWSER="google-chrome"
 export TERM="xterm-256color" # for vim and Alacritty correct colors
 export EDITOR="/usr/bin/nvim"
 export VISUAL=$EDITOR
@@ -205,5 +209,34 @@ eval "$(direnv hook zsh)"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+#compdef projen
+###-begin-projen-completions-###
+#
+# yargs command completion script
+#
+# Installation: projen completion >> ~/.zshrc
+#    or projen completion >> ~/.zprofile on OSX.
+#
+_projen_yargs_completions()
+{
+  local reply
+  local si=$IFS
+  IFS=$'
+' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" projen --get-yargs-completions "${words[@]}"))
+  IFS=$si
+  _describe 'values' reply
+}
+compdef _projen_yargs_completions projen
+###-end-projen-completions-###
+#
+export ANDROID_HOME="/home/lorenzo/lib/Android/Sdk"
+
+export PATH="/home/lorenzo/.local/share/sentry-devenv/bin/:$PATH"
+export SENTRY_EXTERNAL_CONTRIBUTOR="1"
+
+# echo >> /home/lorenzo/.zshrc
+# echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/lorenzo/.zshrc
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 clear

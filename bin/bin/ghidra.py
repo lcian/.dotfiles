@@ -52,7 +52,6 @@ if __name__ == '__main__':
                 run(os.path.join(cwd, 'ghidra', subfile))
                 exit(0)
     for file_name in file_names:
-        if file_name.endswith("_patched"):
+        if os.access(file_name, os.X_OK) and not file_name.endswith(".py"):
             run(os.path.join(cwd, file_name))
             exit(0)
-            
