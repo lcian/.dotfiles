@@ -19,6 +19,7 @@ vim.opt.swapfile = false
 vim.opt.undofile = true
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.modeline = false
+vim.cmd([[ filetype plugin on ]])
 
 -- correct rendering of colors
 vim.cmd([[ let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum" ]])
@@ -84,6 +85,33 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 vim.cmd([[ highlight CursorColumn guibg=#736431 ]])
 vim.cmd([[ highlight CursorLine guibg=#736431 ]])
 
+vim.filetype.add({
+	extension = {
+		lp = "gringo",
+	},
+})
+
+local name = "gringo-language-server"
+local client = vim.lsp.start_client({
+	name = name,
+	cmd = { name },
+})
+
+if not client then
+	vim.notify("Something went wrong when starting " .. name)
+	return
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "gringo",
+	callback = function()
+		vim.lsp.buf_attach_client(0, client)
+	end,
+})
+
+vim.keymap.set("n", "<leader>lr", ":LspRestart<CR>")
+vim.keymap.set("n", "<leader>ls", ":LspStop<CR>")
+
 local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
 lspconfig.gopls.setup({
@@ -92,6 +120,15 @@ lspconfig.gopls.setup({
 			completeUnimported = true,
 			usePlaceholders = true,
 		},
+	},
+})
+lspconfig.clangd.setup({
+	cmd = {
+		"clangd",
+		"--background-index",
+		"--clang-tidy",
+		"--cross-file-rename",
+		"--header-insertion=iwyu",
 	},
 })
 
@@ -104,13 +141,14 @@ null_ls.setup({
 		-- null_ls.builtins.diagnostics.cspell
 		--
 		-- python
-		-- null_ls.builtins.formatting.ruff,
-		-- null_ls.builtins.formatting.black,
-		-- null_ls.builtins.formatting.isort,
-
+		null_ls.builtins.formatting.ruff,
+		-- null_ls.builtins.formatting.black.with({
+		-- 	extra_args = { "--line-length", "120" },
+		-- }),
+		null_ls.builtins.formatting.isort,
+		--
 		-- js
 		null_ls.builtins.formatting.prettier,
-
 		--
 		-- go
 		null_ls.builtins.formatting.gofmt.with({
@@ -119,14 +157,23 @@ null_ls.setup({
 		null_ls.builtins.formatting.goimports_reviser,
 		-- null_ls.builtins.formatting.golines,
 		--
-		-- c
-		null_ls.builtins.formatting.clang_format,
+		-- c/c++
+		null_ls.builtins.formatting.clang_format.with({
+			extra_args = { "-style=file" },
+		}),
+		null_ls.builtins.diagnostics.cpplint,
+
 		--
 		-- rust
 		null_ls.builtins.formatting.rustfmt,
-
+		--
 		-- lua
 		null_ls.builtins.formatting.stylua,
+
+		-- sql
+		null_ls.builtins.diagnostics.sqlfluff.with({
+			extra_args = { "--dialect", "postgres" }, -- change to your dialect
+		}),
 	},
 	on_attach = function(client, bufnr)
 		if client.supports_method("textDocument/formatting") then

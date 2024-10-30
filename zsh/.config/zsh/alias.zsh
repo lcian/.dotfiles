@@ -39,14 +39,15 @@ alias lla="logo-ls -X -la"
 # CTF
 alias pwndbg="ln -sf $HOME/.config/gdb/pwndbg $HOME/.gdbinit"
 alias gef="ln -sf $HOME/.config/gdb/gef $HOME/.gdbinit"
-pwninit_bin="$HOME/bin/pwninit"
 pwninit () {
   nc=${1:""}
-  $pwninit_bin $nc --template-path ~/.config/pwninit/pwn.py && ghidra.py `pwd`
-}
-pwninit_simple () {
-  nc=${1:""}
-  $pwninit_bin $nc --template-path ~/.config/pwninit/pwn.py
+  host=`cut -d: -f1 <<< $nc`
+  port=`cut -d: -f2 <<< $nc`
+  template=`pwn template --host $host --port $port`
+  if [ ! -f "solve.py" ]; then
+    echo "$template" > solve.py
+  fi
+  ghidra.py `pwd`
 }
 alias seccomp-tools="seccomp-tools.ruby3.2"
 alias one-gadget="one_gadget.ruby3.2"
@@ -61,7 +62,11 @@ alias idea="/home/lorenzo/lib/intellij/idea-IU-241.15989.150/bin/./idea.sh >/dev
 alias goland="/home/lorenzo/lib/goland/GoLand-2024.1.1/bin/./goland.sh >/dev/null 2>&1 & disown"
 alias rover="/home/lorenzo/lib/rust-rover/RustRover-2024.1.2/bin/rustrover.sh >/dev/null 2>&1 & disown"
 alias postman="/home/lorenzo/lib/postman/./Postman >/dev/null 2>&1 & disown"
+alias astudio="/home/lorenzo/lib/android-studio/bin/studio.sh >/dev/null 2>&1 & disown"
+alias unreal="/home/lorenzo/lib/unreal/Engine/Binaries/Linux/UnrealEditor >/dev/null 2>&1 & disown"
 
 alias jgit='java -jar /home/lorenzo/projects/jgit/target/jgit.jar "$@"'
 
 alias obsidian="/home/lorenzo/lib/Obsidian-1.6.5.AppImage >/dev/null 2>&1 & disown"
+
+#alias npm="pnpm"

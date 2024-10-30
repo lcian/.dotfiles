@@ -25,4 +25,4 @@
 [init]
 	defaultBranch = master
 [rerere]
-	enabled = true
+    enabled = true

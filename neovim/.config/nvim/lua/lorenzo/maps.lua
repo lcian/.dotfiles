@@ -11,12 +11,11 @@ wk.register({
 		h = { "<cmd>Telescope help_tags<CR>", "Help" },
 		m = { "<cmd>Telescope marks initial_mode=normal<CR>", "Marks" },
 		r = { "<cmd>Telescope lsp_references<CR>", "References" },
-		c = { "<cmd>Telescope lsp_references<CR>", "References" },
 	},
 }, { prefix = "<leader>" })
 
 wk.register({
-	b = { "<cmd>Telescope buffers initial_mode=normal<CR>", "Buffers" },
+	b = { "<cmd>Telescope buffers<CR>", "Buffers" },
 }, { prefix = "<leader>" })
 
 wk.register({
