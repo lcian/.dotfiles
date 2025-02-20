@@ -177,7 +177,7 @@ source $ZDOTDIR/alias.zsh
 # cargo
 export PATH="$HOME/.cargo/bin:$PATH"
 
-# conda
+# other hooks
 source $HOME/.zshrc
 
 # zoxide
@@ -232,11 +232,12 @@ compdef _projen_yargs_completions projen
 #
 export ANDROID_HOME="/home/lorenzo/lib/Android/Sdk"
 
-export PATH="/home/lorenzo/.local/share/sentry-devenv/bin/:$PATH"
-export SENTRY_EXTERNAL_CONTRIBUTOR="1"
+source $ZDOTDIR/secrets.zsh
 
 # echo >> /home/lorenzo/.zshrc
 # echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/lorenzo/.zshrc
 # eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+#
+eval "$(uv generate-shell-completion zsh)"
 
 clear

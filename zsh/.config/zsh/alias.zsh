@@ -9,6 +9,7 @@ alias gc="git commit"
 alias gd="git difftool"
 alias ga="git add"
 alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)-%an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+alias gpr="gh pr view --web"
 alias py="python3"
 alias ipy="ipython3"
 
@@ -24,6 +25,7 @@ alias src="$EDITOR ~/.config/starship/starship.toml"
 alias rofic="$EDITOR ~/.config/rofi/config.rasi"
 alias vrc="$EDITOR ~/.vimrc"
 alias ivrc="$EDITOR ~/.ideavimrc"
+alias gitc="$EDITOR ~/.gitconfig"
 
 # replacements
 alias cat="bat --theme='Monokai Extended Origin'"
@@ -70,3 +72,63 @@ alias jgit='java -jar /home/lorenzo/projects/jgit/target/jgit.jar "$@"'
 alias obsidian="/home/lorenzo/lib/Obsidian-1.6.5.AppImage >/dev/null 2>&1 & disown"
 
 #alias npm="pnpm"
+
+# https://gist.github.com/karpathy/1dd0294ef9567971c1e4348a90d69285
+gca() {
+    if [[ -z "$(git diff --cached)" ]]; then
+        echo "no staged changes to commit"
+        return 1
+    fi
+
+    generate_commit_message() {
+       repo_name=$(basename `git rev-parse --show-toplevel`)
+       git diff --staged | llm "
+Write a single conventional commits style commit message for this diff in the $repo_name repo.
+Keep it concise and general.
+"
+    }
+
+    echo "generating commit message..."
+    commit_message=$(generate_commit_message)
+
+    git commit -e -F <(echo "$commit_message")
+}
+
+gba() {
+    if [[ -z "$(git diff --cached)" ]]; then
+        echo "no staged changes"
+        return 1
+    fi
+
+    generate_branch_name() {
+       git diff --staged | llm "
+Write a concise branch name for this diff in the $repo_name repo.
+It should consist of the conventional commits type, followed by a max five word description of the change.
+Examples: feat/api-server-integration, fix/typo-java-docs, ref/extract-utility-function.
+"
+    }
+
+    read_input() {
+        if [ -n "$ZSH_VERSION" ]; then
+            echo -n "$1"
+            read -r REPLY
+        else
+            read -p "$1" -r REPLY
+        fi
+    }
+
+    echo "generating branch name..."
+    username=$(git config user.name | xargs)
+    branch_name=$username/$(generate_branch_name)
+    echo $branch_name
+
+    read_input "(y) to accept, any other key to abort: "
+    choice=$REPLY
+
+    if [ "$choice" != "y" ]; then
+        echo "aborted"
+        return 1
+    else
+        git checkout -b $branch_name
+    fi
+}

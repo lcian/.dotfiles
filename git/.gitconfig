@@ -22,7 +22,16 @@
     conflictstyle = diff3
 [mergetool "vimdiff"]
     layout = LOCAL,MERGED,REMOTE
+
 [init]
-	defaultBranch = master
+    defaultBranch = master
+
 [rerere]
     enabled = true
+
+[push]
+    default = current
+
+[alias]
+    pr = "!f() {};f"
+

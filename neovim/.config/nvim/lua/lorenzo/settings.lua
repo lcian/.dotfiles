@@ -131,6 +131,17 @@ lspconfig.clangd.setup({
 		"--header-insertion=iwyu",
 	},
 })
+lspconfig.rust_analyzer.setup({
+	settings = {
+		["rust-analyzer"] = {
+			check = {
+				command = "clippy",
+				extraArgs = { "-W", "clippy::pedantic" },
+			},
+		},
+	},
+	root_dir = util.root_pattern("Cargo.toml"),
+})
 
 local null_ls = require("null-ls")
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
@@ -139,31 +150,30 @@ null_ls.setup({
 	sources = {
 		-- general
 		-- null_ls.builtins.diagnostics.cspell
-		--
+
 		-- python
 		null_ls.builtins.formatting.ruff,
 		-- null_ls.builtins.formatting.black.with({
 		-- 	extra_args = { "--line-length", "120" },
 		-- }),
 		null_ls.builtins.formatting.isort,
-		--
+
 		-- js
 		null_ls.builtins.formatting.prettier,
-		--
+
 		-- go
 		null_ls.builtins.formatting.gofmt.with({
 			extra_args = { "s" },
 		}),
 		null_ls.builtins.formatting.goimports_reviser,
 		-- null_ls.builtins.formatting.golines,
-		--
+
 		-- c/c++
 		null_ls.builtins.formatting.clang_format.with({
 			extra_args = { "-style=file" },
 		}),
-		null_ls.builtins.diagnostics.cpplint,
+		-- null_ls.builtins.diagnostics.cpplint,
 
-		--
 		-- rust
 		null_ls.builtins.formatting.rustfmt,
 		--
@@ -174,6 +184,8 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.sqlfluff.with({
 			extra_args = { "--dialect", "postgres" }, -- change to your dialect
 		}),
+
+		null_ls.builtins.formatting.ocamlformat,
 	},
 	on_attach = function(client, bufnr)
 		if client.supports_method("textDocument/formatting") then
