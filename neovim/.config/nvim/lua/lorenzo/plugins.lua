@@ -218,4 +218,7 @@ return require("packer").startup(function(use)
 			require("neoclip").setup()
 		end,
 	})
+
+	-- use("mrcjkb/rustaceanvim")
+	use("mfussenegger/nvim-dap")
 end)

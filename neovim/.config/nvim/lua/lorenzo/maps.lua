@@ -2,74 +2,69 @@ vim.g.mapleader = " "
 
 local wk = require("which-key")
 
-wk.register({
-	f = {
-		name = "Telescope",
-		f = { "<cmd>Telescope find_files<CR>", "Find File" },
-		g = { "<cmd>Telescope git_files<CR>", "Git files" },
-		l = { "<cmd>Telescope live_grep<CR>", "Live grep" },
-		h = { "<cmd>Telescope help_tags<CR>", "Help" },
-		m = { "<cmd>Telescope marks initial_mode=normal<CR>", "Marks" },
-		r = { "<cmd>Telescope lsp_references<CR>", "References" },
-	},
-}, { prefix = "<leader>" })
-
-wk.register({
-	b = { "<cmd>Telescope buffers<CR>", "Buffers" },
-}, { prefix = "<leader>" })
-
-wk.register({
-	g = {
-		name = "LSP",
-		A = { ":lua vim.lsp.buf.code_action()<CR>", "Code Action" },
-		d = { ":lua vim.lsp.buf.definition()<CR>", "Definition" },
-		f = { ":lua vim.lsp.buf.format()<CR>", "Format" },
-		u = { ":lua vim.lsp.buf.references()<cr>", "Usage" },
-		R = { ":lua vim.lsp.buf.rename()<cr>", "Rename" },
-		h = { ":lua vim.lsp.buf.hover()<CR>", "Hover" },
-		t = { ":Trouble diagnostics<CR>", "Trouble" },
-		c = {
-			name = "Copilot",
-			e = { ":Copilot enable<CR>:Copilot status<CR>", "Enable" },
-			d = { ":Copilot disable<CR>:Copilot status<CR>", "Disable" },
-			s = { ":Copilot panel<CR>", "Status" },
-		},
-	},
-}, { prefix = "<leader>" })
-
-wk.register({
-	["<C-S>"] = { ":lua vim.lsp.buf.code_action()<CR>", "Code Action" },
+wk.add({
+	{ "<leader>f", group = "Telescope" },
+	{ "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find File" },
+	{ "<leader>fg", "<cmd>Telescope git_files<CR>", desc = "Git files" },
+	{ "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Help" },
+	{ "<leader>fl", "<cmd>Telescope live_grep<CR>", desc = "Live grep" },
+	{ "<leader>fm", "<cmd>Telescope marks initial_mode=normal<CR>", desc = "Marks" },
+	{ "<leader>fr", "<cmd>Telescope lsp_references<CR>", desc = "References" },
+	{ "<leader>fj", "<cmd>Telescope jumplist<CR>", desc = "Jumplist" },
 })
 
-wk.register({
-	u = { ":UndotreeToggle<CR>", "UndoTree" },
-}, { prefix = "<leader>" })
+wk.add({
+	{ "<leader>b", "<cmd>Telescope buffers<CR>", desc = "Buffers" },
+})
+
+wk.add({
+	{ "<leader>g", group = "LSP" },
+	{ "<leader>gA", ":lua vim.lsp.buf.code_action()<CR>", desc = "Code Action" },
+	{ "<leader>gR", ":lua vim.lsp.buf.rename()<cr>", desc = "Rename" },
+	{ "<leader>gc", group = "Copilot" },
+	{ "<leader>gcd", ":Copilot disable<CR>:Copilot status<CR>", desc = "Disable" },
+	{ "<leader>gce", ":Copilot enable<CR>:Copilot status<CR>", desc = "Enable" },
+	{ "<leader>gcs", ":Copilot panel<CR>", desc = "Status" },
+	{ "<leader>gd", ":lua vim.lsp.buf.definition()<CR>", desc = "Definition" },
+	{ "<leader>gf", ":lua vim.lsp.buf.format()<CR>", desc = "Format" },
+	{ "<leader>gh", ":lua vim.lsp.buf.hover()<CR>", desc = "Hover" },
+	{ "<leader>gt", ":Trouble diagnostics<CR>", desc = "Trouble" },
+	{ "<leader>gu", ":lua vim.lsp.buf.references()<cr>", desc = "Usage" },
+})
+
+wk.add({
+	{ "<C-S>", ":lua vim.lsp.buf.code_action()<CR>", desc = "Code Action" },
+})
+
+wk.add({
+	{ "<leader>u", ":UndotreeToggle<CR>", desc = "UndoTree" },
+})
 
 -- wk.register({
 --     m = { ":NvimTreeFindFileToggle<CR>", "NvimTree" },
 -- }, { prefix = "<leader>" })
 
-wk.register({
-	["<leader>,"] = { ":AerialToggle!<CR>", "Aerial" },
+wk.add({
+	{ "<leader>,", ":AerialToggle!<CR>", desc = "Aerial" },
 })
 
-wk.register({
-	["p"] = { ":BufferPrevious<CR>", "Previous buffer" },
-	["n"] = { ":BufferNext<CR>", "Next buffer" },
-	["q"] = { ":BufferClose<CR>", "which_key_ignore" },
-	["1"] = { ":BufferGoto 1<CR>", "which_key_ignore" },
-	["2"] = { ":BufferGoto 2<CR>", "which_key_ignore" },
-	["3"] = { ":BufferGoto 3<CR>", "which_key_ignore" },
-	["4"] = { ":BufferGoto 4<CR>", "which_key_ignore" },
-	["5"] = { ":BufferGoto 5<CR>", "which_key_ignore" },
-	["6"] = { ":BufferGoto 6<CR>", "which_key_ignore" },
-	["7"] = { ":BufferGoto 7<CR>", "which_key_ignore" },
-	["8"] = { ":BufferGoto 8<CR>", "which_key_ignore" },
-	["9"] = { ":BufferGoto 9<CR>", "which_key_ignore" },
-}, { prefix = "<leader>" })
+wk.add({
+	{ "<leader>1", ":BufferGoto 1<CR>", hidden = true },
+	{ "<leader>2", ":BufferGoto 2<CR>", hidden = true },
+	{ "<leader>3", ":BufferGoto 3<CR>", hidden = true },
+	{ "<leader>4", ":BufferGoto 4<CR>", hidden = true },
+	{ "<leader>5", ":BufferGoto 5<CR>", hidden = true },
+	{ "<leader>6", ":BufferGoto 6<CR>", hidden = true },
+	{ "<leader>7", ":BufferGoto 7<CR>", hidden = true },
+	{ "<leader>8", ":BufferGoto 8<CR>", hidden = true },
+	{ "<leader>9", ":BufferGoto 9<CR>", hidden = true },
+	{ "<leader>n", ":BufferNext<CR>", desc = "Next buffer" },
+	{ "<leader>p", ":BufferPrevious<CR>", desc = "Previous buffer" },
+	{ "<leader>q", ":BufferClose<CR>", hidden = true },
+})
 
-wk.register({
-	Q = "which_key_ignore",
+wk.add({
+	{ "Q", hidden = true },
 })
 
 -- telescope
