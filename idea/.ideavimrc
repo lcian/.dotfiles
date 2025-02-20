@@ -43,3 +43,12 @@ map <leader>gR <Action>(RenameElement)
 map <C-x> <Action>(NextInlineCompletionSuggestionAction)
 map <C-p> <Action>(PrevInlineCompletionSuggestionAction)
 map <C-y> <Action>(InsertInlineCompletionAction)
+
+map <leader>ff <Action>(GotoFile)
+map <leader>fa <Action>(GotoAction)
+map <leader>fc <Action>(GoToClass)
+map <leader>fs <Action>(GoToSymbol)
+map <leader>fo <Action>(GoToSymbol)
+
+map <leader>q <Action>(CloseActiveTab)
+

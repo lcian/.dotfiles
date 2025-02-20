@@ -114,10 +114,10 @@ vim.keymap.set("n", "Q", "<nop>")
 
 -- vim-tmux-navigator
 vim.cmd([[ let g:tmux_navigator_no_mappings = 1 ]])
-vim.cmd([[ noremap <silent> <M-h> :<C-U>TmuxNavigateLeft<cr> ]])
-vim.cmd([[ noremap <silent> <M-j> :<C-U>TmuxNavigateDown<cr> ]])
-vim.cmd([[ noremap <silent> <M-k> :<C-U>TmuxNavigateUp<cr> ]])
-vim.cmd([[ noremap <silent> <M-l> :<C-U>TmuxNavigateRight<cr> ]])
+vim.cmd([[ noremap <silent> ˙ :<C-U>TmuxNavigateLeft<cr> ]])
+vim.cmd([[ noremap <silent> ∆ :<C-U>TmuxNavigateDown<cr> ]])
+vim.cmd([[ noremap <silent> ˚ :<C-U>TmuxNavigateUp<cr> ]])
+vim.cmd([[ noremap <silent> ¬ :<C-U>TmuxNavigateRight<cr> ]])
 
 -- nvim-tree
 -- vim.keymap.set("n", "<leader>m", ":NvimTreeFindFileToggle<CR>")

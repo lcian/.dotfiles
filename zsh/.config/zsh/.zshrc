@@ -6,6 +6,7 @@ setopt nonomatch           # hide error message if there is no match for the pat
 setopt notify              # report the status of background jobs immediately
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
+setopt autopushd           # push dir on dirstack upon cd
 
 WORDCHARS=${WORDCHARS//\/} # Don't consider certain characters part of the word
 
@@ -14,16 +15,17 @@ bindkey -d                                        # delete all bindings
 bindkey ' ' magic-space                           # do history expansion on space
 bindkey '^U' backward-kill-line                   # ctrl + u
 bindkey '^R' history-incremental-search-backward  # ctrl + r
-bindkey 'α' history-incremental-search-forward   # ctrl + n
-bindkey '^L' forward-word                         # ctrl + l
-bindkey '^H' backward-kill-word                   # ctrl + h
-bindkey '^[[1;5C' forward-word                    # ctrl + ->
-bindkey '^[[1;5D' backward-word                   # ctrl + <-
-bindkey '^[[3;5~' backward-kill-word              # ctrl + backspace
+bindkey '^N' history-incremental-search-forward   # ctrl + n
+bindkey 'δ' forward-word                          # ctrl + l 
+bindkey '^L' forward-word                         # ctrl + shift + l 
+bindkey 'α' backward-kill-word                    # ctrl + h
+bindkey '^[[1;5C' forward-word                    # ctrl + -> (not working)
+bindkey '^[[1;5D' backward-word                   # ctrl + <- (not working)
+bindkey '^[[3;5~' backward-kill-word              # ctrl + backspace (not working)
 bindkey 'θ' backward-word                         # ctrl + shift + h (Alacritty)
 bindkey '^[[Z' reverse-menu-complete              # shift + tab previous autocomplete choice
-bindkey '^K' up-line-or-history
-bindkey '^J' down-line-or-history
+bindkey 'γ' up-line-or-history
+bindkey 'β' down-line-or-history
 bindkey -r '^O'
 
 # enable completion features
@@ -44,7 +46,7 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # enable autosuggestions
-source $ZDOTDIR/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 #ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999,underline'
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#8a8a8a,underline'
 
@@ -105,7 +107,7 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # syntax highlightning
-source $ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 #ZSH_HIGHLIGHT_STYLES[default]=none
 ZSH_HIGHLIGHT_STYLES[default]=fg=white
@@ -150,14 +152,9 @@ ZSH_HIGHLIGHT_STYLES[bracket-level-4]=fg=yellow,bold
 ZSH_HIGHLIGHT_STYLES[bracket-level-5]=fg=cyan,bold
 ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
 
-# command not found
-# if [ -f /etc/zsh_command_not_found ]; then
-#     . /etc/zsh_command_not_found
-# fi
-
 # some environment vars
 export TERM="xterm-256color" # for vim and Alacritty correct colors
-export EDITOR="/usr/bin/nvim"
+export EDITOR="/opt/homebrew/bin/nvim"
 export VISUAL=$EDITOR
 
 # prompt
@@ -170,40 +167,33 @@ PROMPT_EOL_MARK=""
 # aliases
 source $ZDOTDIR/alias.zsh
 
-# cargo
-export PATH="$HOME/.cargo/bin:$PATH"
-
-# conda
-source $HOME/.zshrc
-
-# zoxide
-eval "$(zoxide init zsh)"
-
-# npm global nosudo 
-# https://github.com/sindresorhus/guides/blob/main/npm-global-without-sudo.md
-NPM_PACKAGES="${HOME}/.npm-global"
-export PATH="$PATH:$NPM_PACKAGES/bin"
-# Preserve MANPATH if you already defined it somewhere in your config.
-# Otherwise, fall back to `manpath` so we can inherit from `/etc/manpath`.
-export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
-
-export PYTHONSTARTUP=$HOME/.pythonrc.py
-
 # disable Ctrl+S
 if [[ -t 0 && $- = *i* ]]
 then
     stty -ixon
 fi
 
-export GOPATH="/home/lorenzo/lib/go"
-export PATH="$PATH:$GOPATH/bin"
-
-export JAVA_HOME="/usr/lib64/jvm/java-22-openjdk-22"
-
 eval "$(direnv hook zsh)"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH="$PATH:$HOME/bin"
 
-clear
+export GOPATH="$HOME/.go"
+export PATH="$PATH:$GOPATH/bin"
+
+export PATH="$PATH:$GOPATH/.cargo/bin"
+export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin"
+source "$HOME/.cargo/env"
+export PATH="/opt/homebrew/opt/binutils/bin:$PATH"
+export PATH="/Users/lcian/.local/share/sentry-devenv/bin/:$PATH"
+
+export GREP_OPTIONS='--color=always'
+export GREP_COLOR='1;35;40'
+
+source $HOME/.local/bin/env
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+. "$HOME/.local/bin/env"
+

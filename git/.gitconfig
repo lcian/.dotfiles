@@ -1,12 +1,12 @@
-[credential "https://github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
-[credential "https://gist.github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
+#[credential "https://github.com"]
+#	helper = 
+#	helper = !/usr/bin/gh auth git-credential
+#[credential "https://gist.github.com"]
+#	helper = 
+#	helper = !/usr/bin/gh auth git-credential
 [user]
     name = lcian
-    email = cian.lorenzo@gmail.com
+    email = lorenzo.cian@sentry.io
 
 [diff]
     tool = difftastic
@@ -22,7 +22,10 @@
     conflictstyle = diff3
 [mergetool "vimdiff"]
     layout = LOCAL,MERGED,REMOTE
+
 [init]
-	defaultBranch = master
+    defaultBranch = main
 [rerere]
-	enabled = true
+    enabled = true
+[push]
+	default = current
