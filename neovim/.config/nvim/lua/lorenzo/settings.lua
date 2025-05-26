@@ -145,3 +145,27 @@ null_ls.setup({
 		end
 	end,
 })
+
+vim.filetype.add({
+    extension = {
+        mdx = "mdx"
+    }
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "mdx",
+    callback = function ()
+        local name = "sentry-docs-language-server"
+        local client = vim.lsp.start_client {
+            name = name,
+            cmd = { name },
+            cmd_env = { RUST_BACKTRACE = "1" },
+        } 
+        if not client then
+            vim.notify ("Something went wrong when starting " .. name)
+            return
+        end
+        vim.lsp.buf_attach_client(0, client)
+        vim.lsp.set_log_level("info")
+    end,
+})

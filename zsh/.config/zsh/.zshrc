@@ -174,6 +174,7 @@ then
 fi
 
 eval "$(direnv hook zsh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export PATH="$PATH:$HOME/bin"
 
@@ -190,10 +191,10 @@ export GREP_OPTIONS='--color=always'
 export GREP_COLOR='1;35;40'
 
 source $HOME/.local/bin/env
+#. "$HOME/.local/bin/env"
+
+source $HOME/.config/zsh/secrets.zsh
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-. "$HOME/.local/bin/env"
-

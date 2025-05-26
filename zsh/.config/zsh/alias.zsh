@@ -24,8 +24,8 @@ alias vrc="$EDITOR ~/.vimrc"
 alias ivrc="$EDITOR ~/.ideavimrc"
 
 # replacements
-#alias cat="bat --theme='Monokai Extended Origin'"
-#alias du="dust"
+alias cat="bat --theme='Monokai Extended Origin'"
+alias du="dust"
 #alias ls="ls --color=tty --group-directories-first"
 alias ls="logo-ls -X"
 alias l="logo-ls -X"
@@ -37,3 +37,62 @@ alias lla="logo-ls -X -la"
 alias alert='terminal-notifier -title "Process finished" -message "$([ $? = 0 ] && echo Success || echo Error)"'
 
 copr() { git fetch origin "refs/pull/$1/head:pr/$1" && git checkout "pr/$1"; }
+
+gca() {
+    if [[ -z "$(git diff --cached)" ]]; then
+        echo "no staged changes to commit"
+        return 1
+    fi
+
+    generate_commit_message() {
+       repo_name=$(basename `git rev-parse --show-toplevel`)
+       git diff --staged | llm "
+Write a single conventional commits style commit message for this diff in the $repo_name repo.
+Keep it concise and general.
+"
+    }
+
+    echo "generating commit message..."
+    commit_message=$(generate_commit_message)
+
+    git commit -e -F <(echo "$commit_message")
+}
+
+gba() {
+    if [[ -z "$(git diff --cached)" ]]; then
+        echo "no staged changes"
+        return 1
+    fi
+
+    generate_branch_name() {
+       git diff --staged | llm "
+Write a concise branch name for this diff in the $repo_name repo.
+It should consist of the conventional commits type, followed by a max five word description of the change.
+Examples: feat/api-server-integration, fix/typo-java-docs, ref/extract-utility-function.
+"
+    }
+
+    read_input() {
+        if [ -n "$ZSH_VERSION" ]; then
+            echo -n "$1"
+            read -r REPLY
+        else
+            read -p "$1" -r REPLY
+        fi
+    }
+
+    echo "generating branch name..."
+    username=$(git config user.name | xargs)
+    branch_name=$username/$(generate_branch_name)
+    echo $branch_name
+
+    read_input "(y) to accept, any other key to abort: "
+    choice=$REPLY
+
+    if [ "$choice" != "y" ]; then
+        echo "aborted"
+        return 1
+    else
+        git checkout -b $branch_name
+    fi
+}

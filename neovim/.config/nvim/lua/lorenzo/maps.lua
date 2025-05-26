@@ -7,11 +7,9 @@ wk.register({
 		name = "Telescope",
 		f = { "<cmd>Telescope find_files<CR>", "Find File" },
 		g = { "<cmd>Telescope git_files<CR>", "Git files" },
-		l = { "<cmd>Telescope live_grep<CR>", "Live grep" },
+		r = { "<cmd>Telescope live_grep<CR>", "Live grep" },
 		h = { "<cmd>Telescope help_tags<CR>", "Help" },
 		m = { "<cmd>Telescope marks initial_mode=normal<CR>", "Marks" },
-		r = { "<cmd>Telescope lsp_references<CR>", "References" },
-		c = { "<cmd>Telescope lsp_references<CR>", "References" },
 	},
 }, { prefix = "<leader>" })
 
@@ -40,6 +38,11 @@ wk.register({
 
 wk.register({
 	["<C-S>"] = { ":lua vim.lsp.buf.code_action()<CR>", "Code Action" },
+})
+
+wk.register({
+  ["]t"] = { function() require("trouble").next({skip_groups = true, jump = true}) end, "Next Trouble item" },
+  ["[t"] = { function() require("trouble").prev({skip_groups = true, jump = true}) end, "Previous Trouble item" },
 })
 
 wk.register({
@@ -192,6 +195,7 @@ vim.keymap.set("n", "<leader>th", toggle_cursor_highlight)
 
 vim.keymap.set("n", "<leader>lt", ":InspectTree<CR>")
 vim.keymap.set("n", "<leader>lq", ":EditQuery<CR>")
+vim.keymap.set("n", "<leader>ll", ":LspLog<CR>")
 
 vim.keymap.set("n", "<leader>tp", require("precognition").toggle)
 

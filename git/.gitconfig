@@ -27,5 +27,8 @@
     defaultBranch = main
 [rerere]
     enabled = true
+	autoupdate = true
 [push]
+	default = current
+[pull]
 	default = current
