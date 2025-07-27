@@ -1,1 +1,0 @@
-greenclip daemon >/dev/null

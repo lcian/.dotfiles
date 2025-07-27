@@ -47,7 +47,7 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # enable autosuggestions
-source $ZDOTDIR/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 #ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999,underline'
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#8a8a8a,underline'
 
@@ -108,7 +108,7 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # syntax highlightning
-source $ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 #ZSH_HIGHLIGHT_STYLES[default]=none
 ZSH_HIGHLIGHT_STYLES[default]=fg=white
@@ -163,6 +163,7 @@ export BROWSER="google-chrome"
 export TERM="xterm-256color" # for vim and Alacritty correct colors
 export EDITOR="/usr/bin/nvim"
 export VISUAL=$EDITOR
+export PATH="$HOME/bin:$PATH"
 
 # prompt
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
