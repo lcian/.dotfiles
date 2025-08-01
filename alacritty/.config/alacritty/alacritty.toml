@@ -44,7 +44,7 @@ size = 14.0
 style = "Bold"
 
 [font.bold_italic]
-family = "Fira Code Nerd Font Mono"
+family = "FiraCode Nerd Font Mono"
 
 [font.italic]
 style = "Oblique"
