@@ -4,11 +4,15 @@
 -- Basic
 vim.opt.compatible = false
 vim.opt.encoding = "utf-8"
+-- Leader key
+vim.g.mapleader = " "
 -- Normal backspace behavior
 vim.opt.backspace = "indent,eol,start"
 -- Timeout for key sequences in ms
 vim.opt.ttimeout = true
 vim.opt.ttimeoutlen = 100
+-- Autocompletion
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
 -- Use system clipboard for yanking and pasting
 vim.opt.clipboard = "unnamedplus"
 -- Use an undofile and no swapfile
