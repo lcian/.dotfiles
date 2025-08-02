@@ -25,12 +25,7 @@ return {
   },
 
   -- Launch LSPs automatically with sensible defaults
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
-    },
-  },
+  "neovim/nvim-lspconfig",
 
   -- Bridge mason and lspconfig
   { "williamboman/mason-lspconfig.nvim", opts = {} },
